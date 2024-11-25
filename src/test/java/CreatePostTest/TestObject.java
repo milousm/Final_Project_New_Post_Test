@@ -1,4 +1,4 @@
-package NewPostTest;
+package CreatePostTest;
 
 import Skillo.PageFactory.*;
 import io.github.bonigarcia.wdm.WebDriverManager;

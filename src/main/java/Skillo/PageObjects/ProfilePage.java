@@ -57,9 +57,9 @@ public class ProfilePage {
         privatePostsLabel.click();
     }
 
-    public void clickNewPost(){
-        WebElement newPostLink = driver.findElement(By.cssSelector(".new-post-btn a"));
-        newPostLink.click();
+    public void clickCreatePost(){
+        WebElement createPostLink = driver.findElement(By.cssSelector(".new-post-btn a"));
+        createPostLink.click();
     }
 
 }

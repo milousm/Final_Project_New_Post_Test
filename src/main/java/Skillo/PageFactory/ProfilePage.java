@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,7 +19,7 @@ public class ProfilePage {
     @FindBy(className = "btn-private")
     private WebElement privatePostsLabel;
     @FindBy(css = ".new-post-btn a") // This assumes the link is a child of the button
-    private WebElement newPostLink;
+    private WebElement createPostLink;
     @FindBy(tagName = "app-post")
     private List<WebElement> posts;
     @FindBy(className = "post-filter-buttons")
@@ -60,8 +59,8 @@ public class ProfilePage {
         privatePostsLabel.click();
     }
 
-    public void clickNewPost(){
-        newPostLink.click();
+    public void clickCreatePost(){
+        createPostLink.click();
     }
 
 }

@@ -10,24 +10,24 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.time.Duration;
 
-public class NewPostPage {
+public class CreatePostPage {
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
     private final WebDriver driver;
 
-    public NewPostPage(WebDriver driver) {
+    public CreatePostPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public boolean isUrlLoaded() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        return wait.until(ExpectedConditions.urlToBe(Skillo.PageFactory.NewPostPage.PAGE_URL));
+        return wait.until(ExpectedConditions.urlToBe(Skillo.PageFactory.CreatePostPage.PAGE_URL));
     }
 
-    public String getNewPostElementText(WebDriver driver) {
-        WebElement newPostFormTitle = this.driver.findElement(By.tagName("h3"));
+    public String getPostElementText(WebDriver driver) {
+        WebElement createPostFormTitle = this.driver.findElement(By.tagName("h3"));
         WebDriverWait wait = new WebDriverWait(this.driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOf(newPostFormTitle));
-        return newPostFormTitle.getText();
+        wait.until(ExpectedConditions.visibilityOf(createPostFormTitle));
+        return createPostFormTitle.getText();
     }
 
     public boolean isImageVisible() {

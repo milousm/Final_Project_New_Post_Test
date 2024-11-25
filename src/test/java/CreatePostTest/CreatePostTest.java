@@ -1,19 +1,14 @@
-package NewPostTest;
+package CreatePostTest;
 
-import Skillo.PageFactory.*;
-import org.openqa.selenium.By;
+import Skillo.PageObjects.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
-import java.time.Duration;
 
-public class NewPostTest extends TestObject {
+public class CreatePostTest extends TestObject {
 
 
     @DataProvider(name ="getUsers")
@@ -37,19 +32,19 @@ public class NewPostTest extends TestObject {
         loginPage.login(user, password);
         header.clickNewPost();
 
-        NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-        String newPostText = newPostPage.getNewPostElementText(driver);
+        CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+        String newPostText = createPostPage.getPostElementText(driver);
         String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText,"New post text is incorrect!");
 
-        newPostPage.uploadPicture(postPicture);
-        Assert.assertTrue(newPostPage.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postPicture.getName(), newPostPage.getImageName(), "The image name is incorrect!");
+        createPostPage.uploadPicture(postPicture);
+        Assert.assertTrue(createPostPage.isImageVisible(), "The image is not visible!");
+        Assert.assertEquals(postPicture.getName(), createPostPage.getImageName(), "The image name is incorrect!");
 
         String caption = "Testing create new post caption";
-        newPostPage.populatePostCaption(caption);
-        newPostPage.clickCreatePost();
+        createPostPage.populatePostCaption(caption);
+        createPostPage.clickCreatePost();
 
         ProfilePage profilePage = new ProfilePage(driver);
         Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
@@ -75,21 +70,21 @@ public class NewPostTest extends TestObject {
         loginPage.login(user, password);
         header.clickNewPost();
 
-    NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-    String newPostText = newPostPage.getNewPostElementText(driver);
+    CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+    String newPostText = createPostPage.getPostElementText(driver);
     String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText,"New post text is incorrect!");
 
-        newPostPage.uploadPicture(postPicture);
-        Assert.assertTrue(newPostPage.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postPicture.getName(), newPostPage.getImageName(), "The image name is incorrect!");
+        createPostPage.uploadPicture(postPicture);
+        Assert.assertTrue(createPostPage.isImageVisible(), "The image is not visible!");
+        Assert.assertEquals(postPicture.getName(), createPostPage.getImageName(), "The image name is incorrect!");
 
     String caption = "Testing create new post caption";
-        newPostPage.populatePostCaption(caption);
+        createPostPage.populatePostCaption(caption);
 
-        newPostPage.clickPrivateSwitch();
-        newPostPage.clickCreatePost();
+        createPostPage.clickPrivateSwitch();
+        createPostPage.clickCreatePost();
 
     ProfilePage profilePage = new ProfilePage(driver);
         Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
@@ -117,13 +112,13 @@ public class NewPostTest extends TestObject {
         loginPage.login(user, password);
         header.clickNewPost();
 
-        NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-        String newPostText = newPostPage.getNewPostElementText(driver);
+        CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+        String newPostText = createPostPage.getPostElementText(driver);
         String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText, "New post text is incorrect!");
 
-        newPostPage.clickExitPost();
+        createPostPage.clickExitPost();
         Assert.assertTrue(loginPage.isUrlLoaded(), "The Login URL is not correct!");
 
     }
@@ -140,15 +135,15 @@ public class NewPostTest extends TestObject {
         loginPage.login(user, password);
         header.clickNewPost();
 
-        NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-        String newPostText = newPostPage.getNewPostElementText(driver);
+        CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+        String newPostText = createPostPage.getPostElementText(driver);
         String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText,"New post text is incorrect!");
 
-        newPostPage.clickCreatePost();
+        createPostPage.clickCreatePost();
         String expectedPhotoToastMessage = "Please upload an image!";
-        Assert.assertEquals(newPostPage.getErrorMessage(), expectedPhotoToastMessage, "Photo error message is incorrect!");
+        Assert.assertEquals(createPostPage.getErrorMessage(), expectedPhotoToastMessage, "Photo error message is incorrect!");
     }
 
     @Test(dataProvider = "getUsers")
@@ -163,19 +158,19 @@ public class NewPostTest extends TestObject {
         loginPage.login(user, password);
         header.clickNewPost();
 
-        NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-        String newPostText = newPostPage.getNewPostElementText(driver);
+        CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+        String newPostText = createPostPage.getPostElementText(driver);
         String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText,"New post text is incorrect!");
 
-        newPostPage.uploadPicture(postPicture);
-        Assert.assertTrue(newPostPage.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postPicture.getName(), newPostPage.getImageName(), "The image name is incorrect!");
+        createPostPage.uploadPicture(postPicture);
+        Assert.assertTrue(createPostPage.isImageVisible(), "The image is not visible!");
+        Assert.assertEquals(postPicture.getName(), createPostPage.getImageName(), "The image name is incorrect!");
 
-        newPostPage.clickCreatePost();
+        createPostPage.clickCreatePost();
         String expectedPhotoToastMessage = "Please enter caption!";
-        Assert.assertEquals(newPostPage.getErrorMessage(), expectedPhotoToastMessage, "Caption error message is incorrect!");
+        Assert.assertEquals(createPostPage.getErrorMessage(), expectedPhotoToastMessage, "Caption error message is incorrect!");
     }
 
     @Test(dataProvider = "getUsers")
@@ -191,11 +186,11 @@ public class NewPostTest extends TestObject {
         header.clickProfile();
 
         ProfilePage profilePage = new ProfilePage(driver);
-        profilePage.clickNewPost();
+        profilePage.clickCreatePost();
 
-        NewPostPage newPostPage = new NewPostPage(driver);
-        Assert.assertTrue(newPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
-        String newPostText = newPostPage.getNewPostElementText(driver);
+        CreatePostPage createPostPage = new CreatePostPage(driver);
+        Assert.assertTrue(createPostPage.isUrlLoaded(), "The New Post Page URL is incorrect!");
+        String newPostText = createPostPage.getPostElementText(driver);
         String expectedPostText = "Post a picture to share with your awesome followers";
         Assert.assertEquals(newPostText, expectedPostText, "New post text is incorrect!");
 

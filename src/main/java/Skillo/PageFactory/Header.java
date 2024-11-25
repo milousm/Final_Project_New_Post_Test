@@ -19,7 +19,8 @@ public class Header {
     @FindBy(id = "nav-link-login")
     private WebElement loginLink;
     @FindBy(id = "nav-link-new-post")
-    private WebElement newPostLink;
+    private WebElement createPostLink;
+
 
     public Header(WebDriver driver) {
         this.driver = driver;
@@ -36,6 +37,6 @@ public class Header {
     }
 
     public void clickNewPost() {
-        wait.until(ExpectedConditions.elementToBeClickable(newPostLink)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(createPostLink)).click();
     }
 }

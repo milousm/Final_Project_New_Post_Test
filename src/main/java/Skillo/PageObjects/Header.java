@@ -27,7 +27,8 @@ public class Header {
     }
 
     public void clickNewPost() {
-        WebElement newPostLink = driver.findElement(By.id("nav-link-new-post"));
-        newPostLink.click();
+        WebElement createPostLink = driver.findElement(By.id("nav-link-new-post"));
+        createPostLink.click();
     }
+
 }

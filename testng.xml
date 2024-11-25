@@ -3,7 +3,7 @@
 <suite name="Web test suite" verbose="1">
     <test name="New Post">
         <classes>
-            <class name="NewPostTest.NewPostTest"></class>
+            <class name="CreatePostTest.NewPostTest"></class>
         </classes>
     </test>
 </suite>

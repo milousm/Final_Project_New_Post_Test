@@ -10,14 +10,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.time.Duration;
 
-public class NewPostPage {
+public class CreatePostPage {
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
     private final WebDriver driver;
     private final WebDriverWait wait;
 
 
     @FindBy(tagName = "h3")
-    private WebElement newPostFormTitle;
+    private WebElement createPostFormTitle;
     @FindBy(css = "img.image-preview")
     private WebElement image;
     @FindBy(css = "input.input-lg")
@@ -35,19 +35,19 @@ public class NewPostPage {
     @FindBy(css = ".fas.fa-times")
     private WebElement closePostButton;
 
-    public NewPostPage(WebDriver driver) {
+    public CreatePostPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         PageFactory.initElements(driver, this); // Initialize PageFactory elements
     }
 
     public boolean isUrlLoaded() {
-        return wait.until(ExpectedConditions.urlToBe(NewPostPage.PAGE_URL));
+        return wait.until(ExpectedConditions.urlToBe(CreatePostPage.PAGE_URL));
     }
 
-    public String getNewPostElementText(WebDriver driver) {
-        wait.until(ExpectedConditions.visibilityOf(newPostFormTitle));
-        return newPostFormTitle.getText();
+    public String getPostElementText(WebDriver driver) {
+        wait.until(ExpectedConditions.visibilityOf(createPostFormTitle));
+        return createPostFormTitle.getText();
     }
 
     public boolean isImageVisible() {

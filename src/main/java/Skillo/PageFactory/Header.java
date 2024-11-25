@@ -11,6 +11,9 @@ import java.time.Duration;
 
 public class Header {
     private final WebDriver driver;
+    private final WebDriverWait wait;
+
+
     @FindBy(id = "nav-link-profile")
     private WebElement profileLink;
     @FindBy(id = "nav-link-login")
@@ -20,20 +23,19 @@ public class Header {
 
     public Header(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this); // Initialize PageFactory elements
     }
 
     public void clickProfile() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(profileLink));
-        profileLink.click();
+        wait.until(ExpectedConditions.elementToBeClickable(profileLink)).click();
     }
 
     public void clickLogin() {
-        loginLink.click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginLink)).click();
     }
 
-    public void clickNewPost(){
-        newPostLink.click();
+    public void clickNewPost() {
+        wait.until(ExpectedConditions.elementToBeClickable(newPostLink)).click();
     }
 }

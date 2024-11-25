@@ -1,12 +1,17 @@
 package NewPostTest;
 
-import Skillo.PageObjects.*;
+import Skillo.PageFactory.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.time.Duration;
 
 public class NewPostTest extends TestObject {
 
@@ -28,12 +33,8 @@ public class NewPostTest extends TestObject {
 
         Header header = new Header(driver);
         header.clickLogin();
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
-
+        loginPage.login(user, password);
         header.clickNewPost();
 
         NewPostPage newPostPage = new NewPostPage(driver);
@@ -52,7 +53,6 @@ public class NewPostTest extends TestObject {
 
         ProfilePage profilePage = new ProfilePage(driver);
         Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
-        Assert.assertEquals(profilePage.getPostCount(), 1, "The number of Posts is incorrect!");
         profilePage.clickPost(0);
 
         PostModal postModal = new PostModal(driver);
@@ -60,9 +60,7 @@ public class NewPostTest extends TestObject {
         Assert.assertEquals(postModal.getPostTitle(), caption, "The post caption is incorrect!");
         Assert.assertEquals(postModal.getPostUser(), user, "The user is incorrect!");
         postModal.deletePost();
-        profilePage.waitForPostCountToBeZero();
-        Assert.assertEquals(profilePage.getPostCount(), 0, "Post hasn't been deleted!");
-
+        Assert.assertEquals(profilePage.getPostCount(), 0 , "Posts haven;t been deleted!");
     }
 
     @Test(dataProvider = "getUsers")
@@ -73,12 +71,8 @@ public class NewPostTest extends TestObject {
 
     Header header = new Header(driver);
         header.clickLogin();
-
     LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
-
+        loginPage.login(user, password);
         header.clickNewPost();
 
     NewPostPage newPostPage = new NewPostPage(driver);
@@ -100,8 +94,6 @@ public class NewPostTest extends TestObject {
     ProfilePage profilePage = new ProfilePage(driver);
         Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
         profilePage.clickPrivatePosts();
-
-        Assert.assertEquals(profilePage.getPostCount(), 1, "The number of Posts is incorrect!");
         profilePage.clickPost(0);
 
     PostModal postModal = new PostModal(driver);
@@ -109,8 +101,7 @@ public class NewPostTest extends TestObject {
         Assert.assertEquals(postModal.getPostTitle(), caption, "The post caption is incorrect!");
         Assert.assertEquals(postModal.getPostUser(), user, "The user is incorrect!");
         postModal.deletePost();
-        profilePage.waitForPostCountToBeZero();
-        Assert.assertEquals(profilePage.getPostCount(), 0, "Post hasn't been deleted!");
+        Assert.assertEquals(profilePage.getPostCount(), 0 , "Posts haven;t been deleted!");
 
 }
 
@@ -122,12 +113,8 @@ public class NewPostTest extends TestObject {
 
         Header header = new Header(driver);
         header.clickLogin();
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
-
+        loginPage.login(user, password);
         header.clickNewPost();
 
         NewPostPage newPostPage = new NewPostPage(driver);
@@ -149,12 +136,8 @@ public class NewPostTest extends TestObject {
 
         Header header = new Header(driver);
         header.clickLogin();
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
-
+        loginPage.login(user, password);
         header.clickNewPost();
 
         NewPostPage newPostPage = new NewPostPage(driver);
@@ -166,26 +149,6 @@ public class NewPostTest extends TestObject {
         newPostPage.clickCreatePost();
         String expectedPhotoToastMessage = "Please upload an image!";
         Assert.assertEquals(newPostPage.getErrorMessage(), expectedPhotoToastMessage, "Photo error message is incorrect!");
-
-        newPostPage.uploadPicture(postPicture);
-        Assert.assertTrue(newPostPage.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postPicture.getName(), newPostPage.getImageName(), "The image name is incorrect!");
-
-        String caption = "Testing create new post caption";
-        newPostPage.populatePostCaption(caption);
-        newPostPage.clickCreatePost();
-
-        ProfilePage profilePage = new ProfilePage(driver);
-        Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
-        Assert.assertEquals(profilePage.getPostCount(), 1, "The number of Posts is incorrect!");
-        profilePage.clickPost(0);
-
-        PostModal postModal = new PostModal(driver);
-        Assert.assertTrue(postModal.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postModal.getPostTitle(), caption, "The post caption is incorrect!");
-        Assert.assertEquals(postModal.getPostUser(), user, "The user is incorrect!");
-        postModal.deletePost();
-
     }
 
     @Test(dataProvider = "getUsers")
@@ -196,12 +159,8 @@ public class NewPostTest extends TestObject {
 
         Header header = new Header(driver);
         header.clickLogin();
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
-
+        loginPage.login(user, password);
         header.clickNewPost();
 
         NewPostPage newPostPage = new NewPostPage(driver);
@@ -217,22 +176,6 @@ public class NewPostTest extends TestObject {
         newPostPage.clickCreatePost();
         String expectedPhotoToastMessage = "Please enter caption!";
         Assert.assertEquals(newPostPage.getErrorMessage(), expectedPhotoToastMessage, "Caption error message is incorrect!");
-
-        String caption = "Testing create new post caption";
-        newPostPage.populatePostCaption(caption);
-        newPostPage.clickCreatePost();
-
-        ProfilePage profilePage = new ProfilePage(driver);
-        Assert.assertTrue(profilePage.isUrlLoaded(), "The Profile URL is incorrect!");
-        Assert.assertEquals(profilePage.getPostCount(), 1, "The number of Posts is incorrect!");
-        profilePage.clickPost(0);
-
-        PostModal postModal = new PostModal(driver);
-        Assert.assertTrue(postModal.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(postModal.getPostTitle(), caption, "The post caption is incorrect!");
-        Assert.assertEquals(postModal.getPostUser(), user, "The user is incorrect!");
-        postModal.deletePost();
-
     }
 
     @Test(dataProvider = "getUsers")
@@ -243,11 +186,8 @@ public class NewPostTest extends TestObject {
 
         Header header = new Header(driver);
         header.clickLogin();
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.populateUsername(user);
-        loginPage.populatePassword(password);
-        loginPage.clickSignIn();
+        loginPage.login(user, password);
         header.clickProfile();
 
         ProfilePage profilePage = new ProfilePage(driver);

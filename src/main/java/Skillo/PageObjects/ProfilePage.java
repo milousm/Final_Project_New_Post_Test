@@ -1,10 +1,9 @@
 package Skillo.PageObjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,13 +24,24 @@ public class ProfilePage {
     }
 
     public int getPostCount() {
-        List<WebElement> posts = driver.findElements(By.tagName("app-post"));
-        return posts.size();
-    }
-
-    public void waitForPostCountToBeZero() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until((ExpectedCondition<Boolean>) d -> getPostCount() == 0);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.tagName("app-post")));
+        WebElement allPostStatusFilter = wait.until(ExpectedConditions.elementToBeClickable(By.className("post-filter-buttons")));
+        List<WebElement> statusFilters = allPostStatusFilter.findElements(By.tagName("label"));
+        try {
+            statusFilters.getFirst().click();
+        } catch (Exception _) {
+
+        }
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.tagName("app-spinner")));
+
+        int numberOfPosts = 0;
+        try {
+            numberOfPosts = driver.findElements(By.tagName("app-post")).size();
+        } catch (TimeoutException _) {
+            return 0;
+        }
+        return numberOfPosts;
     }
 
     public void clickPost(int postIndex) {
@@ -48,8 +58,8 @@ public class ProfilePage {
     }
 
     public void clickNewPost(){
-        WebElement newPostButton = driver.findElement(By.className("new-post-btn"));
-        WebElement newPostLink = newPostButton.findElement(By.tagName("a"));
+        WebElement newPostLink = driver.findElement(By.cssSelector(".new-post-btn a"));
         newPostLink.click();
     }
+
 }

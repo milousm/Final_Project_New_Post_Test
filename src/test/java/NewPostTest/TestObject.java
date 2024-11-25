@@ -1,5 +1,6 @@
 package NewPostTest;
 
+import Skillo.PageFactory.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -43,7 +44,7 @@ public class TestObject {
     }
 
     @AfterMethod
-    protected final void tearDownTest(ITestResult testResult) {
+    protected final void tearDownTest(ITestResult testResult) throws InterruptedException {
         takeScreenshot(testResult);
         quitDriver();
     }
@@ -98,4 +99,5 @@ public class TestObject {
         chromeOptions.setExperimentalOption("prefs", prefs);
         return chromeOptions;
     }
+
 }

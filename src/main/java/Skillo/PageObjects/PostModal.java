@@ -39,9 +39,9 @@ public class PostModal {
         return postUser.getText();
     }
 
-    public void deletePost(){
+    public void deletePost() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement deleteUserLabel = wait.until(ExpectedConditions.visibilityOf(modalElement.findElement(By.className("delete-ask"))));
+        WebElement deleteUserLabel = wait.until(ExpectedConditions.elementToBeClickable(By.className("delete-ask")));
         deleteUserLabel.click();
         WebElement yesButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Yes']")));
         yesButton.click();

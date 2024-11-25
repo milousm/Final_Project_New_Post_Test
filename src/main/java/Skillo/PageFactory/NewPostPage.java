@@ -1,6 +1,5 @@
 package Skillo.PageFactory;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +13,9 @@ import java.time.Duration;
 public class NewPostPage {
     public static final String PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
     private final WebDriver driver;
+    private final WebDriverWait wait;
+
+
     @FindBy(tagName = "h3")
     private WebElement newPostFormTitle;
     @FindBy(css = "img.image-preview")
@@ -24,44 +26,41 @@ public class NewPostPage {
     private WebElement uploadField;
     @FindBy(name = "caption")
     private WebElement captionElement;
-    @FindBy(id = "create-post")
-    private WebElement createPostButton;
-    @FindBy(className = "fa-times")
-    private WebElement closePostButton;
     @FindBy(css = "[for=customSwitch2]")
     private WebElement privacySettingLabel;
-    @FindBy(css = ".toast-message")
+    @FindBy(id = "create-post")
+    private WebElement createPostButton;
+    @FindBy(className = "toast-message")
     private WebElement errorMessageElement;
+    @FindBy(css = ".fas.fa-times")
+    private WebElement closePostButton;
 
     public NewPostPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this); // Initialize PageFactory elements
+    }
+
+    public boolean isUrlLoaded() {
+        return wait.until(ExpectedConditions.urlToBe(NewPostPage.PAGE_URL));
     }
 
     public String getNewPostElementText(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(newPostFormTitle));
         return newPostFormTitle.getText();
     }
 
-    public boolean isUrlLoaded() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        return wait.until(ExpectedConditions.urlToBe(NewPostPage.PAGE_URL));
-    }
-
     public boolean isImageVisible() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             return wait.until(ExpectedConditions.visibilityOf(image)).isDisplayed();
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
     public String getImageName() {
-        String imageName = imageTextElement.getAttribute("placeholder");
-        return imageName;
+        return imageTextElement.getAttribute("placeholder");
     }
 
     public void uploadPicture(File file) {
@@ -72,25 +71,23 @@ public class NewPostPage {
         captionElement.sendKeys(caption);
     }
 
-    public void clickPrivateSwitch(){
+    public void clickPrivateSwitch() {
         privacySettingLabel.click();
     }
 
     public void clickCreatePost() {
-        createPostButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(createPostButton)).click();
     }
 
     public String getErrorMessage() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
-            wait.until(ExpectedConditions.visibilityOf(errorMessageElement));
-            return errorMessageElement.getText();
+            return wait.until(ExpectedConditions.visibilityOf(errorMessageElement)).getText();
         } catch (Exception e) {
-            return "Error message not found";
+            return "Error message not found!";
         }
     }
 
-    public void clickExitPost(){
-        closePostButton.click();
+    public void clickExitPost() {
+        wait.until(ExpectedConditions.elementToBeClickable(closePostButton)).click();
     }
 }

@@ -1,8 +1,8 @@
 package Skillo.PageFactory;
 
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -12,10 +12,12 @@ import java.time.Duration;
 
 public class PostModal {
     private final WebDriver driver;
+    private final WebDriverWait wait;
+
     @FindBy(className = "post-modal")
     private WebElement modalElement;
     @FindBy(css = ".post-modal-img img")
-    private WebElement postImage;
+    private WebElement image;
     @FindBy(className = "post-title")
     private WebElement postTitle;
     @FindBy(className = "post-user")
@@ -27,13 +29,13 @@ public class PostModal {
 
     public PostModal(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this); // Initialize PageFactory elements
     }
 
     public boolean isImageVisible() {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            return wait.until(ExpectedConditions.visibilityOf(postImage)).isDisplayed();
+            return wait.until(ExpectedConditions.visibilityOf(image)).isDisplayed();
         } catch (NoSuchElementException e) {
             e.printStackTrace();
             return false;
@@ -41,15 +43,17 @@ public class PostModal {
     }
 
     public String getPostTitle() {
+        wait.until(ExpectedConditions.visibilityOf(postTitle));
         return postTitle.getText();
     }
 
     public String getPostUser() {
+        wait.until(ExpectedConditions.visibilityOf(postUser));
         return postUser.getText();
     }
 
-    public void deletePost(){
-        deleteUserLabel.click();
-        yesButton.click();
+    public void deletePost() {
+        wait.until(ExpectedConditions.visibilityOf(deleteUserLabel)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(yesButton)).click();
     }
 }
